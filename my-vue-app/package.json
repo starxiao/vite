@@ -7,7 +7,14 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.0.5"
+    "ant-design-vue": "^3.2.7",
+    "axios": "^0.22.0",
+    "ffmpeg.js": "^4.2.9003",
+    "qs": "^6.10.1",
+    "vant": "^3.4.9",
+    "vue": "^3.0.5",
+    "vue-router": "^4.0.11",
+    "xgplayer": "^2.32.2"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.1.4",

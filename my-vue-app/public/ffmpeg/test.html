@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+		<!-- <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.10.1/dist/ffmpeg.min.js"></script> -->
+
+    <script src="./ffmpeg.min.js"></script>
+</head>
+<body>
+    <input id="file" type="file" accept="" />
+		<p>输出的视频</p>
+		<video id="video" controls></video>
+</body>
+<script>
+    (function() {
+				document.getElementById('file').addEventListener('change', function(event) {
+						console.log(event);
+						transFile(event.target.files[0]);
+				});
+				
+				const { createFFmpeg, fetchFile } = FFmpeg;
+
+				const ffmpeg = createFFmpeg({ 
+					corePath: "./ffmpeg-core.js",
+					log: true, 
+					progress: function(ratio) {
+						console.log(`进展${ratio}`);
+					}
+				});
+
+				console.log(ffmpeg);
+
+				const transFile = async (file) => {
+					console.log(file);
+					await ffmpeg.load();
+					console.log('ffmpeg下载完毕');
+
+					ffmpeg.FS('writeFile', file.name, await fetchFile(file));
+					await ffmpeg.run('-i', file.name, '-fs', '0.8M', 'test.mp4');
+					console.log('压缩完成');
+
+					const data = ffmpeg.FS('readFile', 'test.mp4');
+					console.log('读取压缩的视频文件',data);
+
+					const video = document.getElementById('video')
+					video.src = URL.createObjectURL(new Blob([data.buffer], {
+						type: 'video/mp4'
+					}));
+				};
+
+    })();
+</script>
+</html>

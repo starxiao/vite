@@ -1,6 +1,6 @@
 <template>
   <h1>{{ msg }}</h1>
-
+  <h2>{{ state.title }}</h2>
   <p>
     <a href="https://vitejs.dev/guide/features.html" target="_blank">Vite Documentation</a> |
     <a href="https://v3.vuejs.org/" target="_blank">Vue 3 Documentation</a>
@@ -19,8 +19,8 @@ import { defineProps, reactive } from 'vue'
 defineProps({
   msg: String
 })
-
-const state = reactive({ count: 0 });
+console.log(import.meta.env);
+const state = reactive({ count: 0, title: import.meta.env.VITE_TITLE });
 const map = new Map();
 map.set('key', 'value');
 console.log(map);
